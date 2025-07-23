@@ -1,1 +1,16 @@
-.env`nnode_modules/`n.DS_Store`n*.log 
+# dependencies
+node_modules/
+
+# dotenv files
+.env
+
+# logs
+*.log
+
+# system files
+.DS_Store
+Thumbs.db
+
+# build output
+dist/
+build/
