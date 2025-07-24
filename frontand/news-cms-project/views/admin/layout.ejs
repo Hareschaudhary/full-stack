@@ -32,8 +32,8 @@
         <!-- LOGO -->
         <div class="col-md-2 me-auto d">
           <a href="/admin/dashboard" class="d-flex align-items-center gap-2">
-            <img class="logo" src="/uploads/<%=settings.website_image%>" class="rounded-circle" alt="Logo" style="height: 50px;width: 50px;">
-            <span class="text-white fs-5 text-nowrap fw-bold"><%=settings.website_name%></span>
+            <img class="logo" src="/uploads/<%=settings.website_image ? settings.website_image : "logo.png"%>" alt="Logo" style="height: 50px;width: 50px;">
+            <span class="text-white fs-5 text-nowrap fw-bold"><%=settings.website_name ? settings.website_name : "Admin Panel"%></span>
           </a>
         </div>
         <!-- /LOGO -->
