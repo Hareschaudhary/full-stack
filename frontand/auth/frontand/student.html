@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap Bundle JS (includes Popper.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Api Curd Opraction</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row mt-5">
+        <div class="col-12">
+          <div class="d-flex justify-content-end gap-3">
+            <input
+              class="form-control"
+              style="max-width: 300px"
+              type="search"
+              placeholder="Search"
+              id="search-table-data"
+              aria-label="Search"
+            />
+            <button
+              type="button"
+              class="btn btn-primary AddStudent"
+              data-toggle="modal"
+              data-target="#AddStudent"
+            >
+              Add Student
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              onclick="logout()"
+            >
+              Log Out
+            </button>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card">
+            <table class="table">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">number</th>
+                  <th scope="col">imaage</th>
+                  <th scope="col">First</th>
+                  <th scope="col">Last name</th>
+                  <th scope="col">email</th>
+                  <th scope="col">phone</th>
+                  <th scope="col">jender</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody id="viewalldata"></tbody>
+            </table>
+            <nav aria-label="Page navigation">
+              <nav aria-label="...">
+                <ul class="pagination justify-content-center" id="paginaction">
+                </ul>
+              </nav>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal ViewStudent-->
+    <div
+      class="modal fade"
+      id="ViewStudent"
+      tabindex="-1"
+      aria-labelledby="studentModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="studentModalLabel">Stṇudent Info</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body p-0 m-0">
+            <div class="card border-0 my-4">
+              <div class="card-body text-center">
+                <img
+                  src=""
+                  id="student-image"
+                  alt="User Profile"
+                  class="rounded-circle profile-img mb-3"
+                  width="100"
+                  height="100"
+                />
+                <h3 class="card-title mb-0" id="student-name">John Doe</h3>
+                <p class="text-muted">Web Developer</p>
+
+                <ul class="list-group list-group-flush mb-3">
+                  <li
+                    class="list-group-item bg-transparent"
+                    id="first-name"
+                  ></li>
+                  <li
+                    class="list-group-item bg-transparent"
+                    id="last-name"
+                  ></li>
+                  <li class="list-group-item bg-transparent" id="email"></li>
+                  <li class="list-group-item bg-transparent" id="gender"></li>
+                  <li
+                    class="list-group-item bg-transparent"
+                    id="phone-number"
+                  ></li>
+                </ul>
+
+                <div class="d-flex justify-content-between text-center mt-4">
+                  <div>
+                    <h5 class="mb-0">1.5k</h5>
+                    <small class="text-muted">Followers</small>
+                  </div>
+                  <div>
+                    <h5 class="mb-0">120</h5>
+                    <small class="text-muted">Projects</small>
+                  </div>
+                  <div>
+                    <h5 class="mb-0">4.8</h5>
+                    <small class="text-muted">Rating</small>
+                  </div>
+                </div>
+
+                <a href="" class="btn btn-primary w-100 mt-4" id="phone"
+                  >Connect</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal AddStudent-->
+    <div
+      class="modal fade"
+      id="AddStudent"
+      tabindex="-1"
+      aria-labelledby="studentModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="studentModalLabel">
+              Edit Stṇudent Info
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body p-0 m-0">
+            <form id="AddStudentForm" enctype="multipart/form-data">
+              <div class="row p-3 g-3">
+                <div class="col-12">
+                  <label for="first_name" class="form-label">First Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="first_name"
+                    name="first_name"
+                    required
+                  />
+                </div>
+                <div class="col-12">
+                  <label for="last_name" class="form-label">Last Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="last_name"
+                    name="last_name"
+                    required
+                  />
+                </div>
+                <div class="col-12">
+                  <label for="email" class="form-label">Email address</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    required
+                  />
+                </div>
+                <div class="col-12">
+                  <label for="phone" class="form-label">Phone</label>
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="phone"
+                    name="phone"
+                    required
+                  />
+                </div>
+                <div class="col-12">
+                  <div class="mb-3">
+                    <label class="form-label d-block">Gender</label>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="male"
+                        value="male"
+                        required
+                      />
+                      <label class="form-check-label" for="male">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="female"
+                        value="female"
+                      />
+                      <label class="form-check-label" for="female"
+                        >Female</label
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="mb-3">
+                    <label for="profile_pic" class="form-label"
+                      >Profile Picture</label
+                    >
+                    <input
+                      class="form-control"
+                      type="file"
+                      id="profile_pic"
+                      name="profile_pic"
+                      accept="image/*"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-success me-3 mb-3">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal EditStudent-->
+    <div
+      class="modal fade"
+      id="EditStudent"
+      tabindex="-1"
+      aria-labelledby="studentModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="studentModalLabel">
+              Edit Stṇudent Info
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body p-0 m-0">
+            <form id="studentForm" enctype="multipart/form-data">
+              <div class="row p-3 g-3">
+                <input type="hidden" id="student-id" />
+                <div class="col-12">
+                  <label for="first_name" class="form-label">First Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="first_name"
+                    name="first_name"
+                    required
+                  />
+                </div>
+                <div class="col-12">
+                  <label for="last_name" class="form-label">Last Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="last_name"
+                    name="last_name"
+                    required
+                  />
+                </div>
+                <div class="col-12">
+                  <label for="email" class="form-label">Email address</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    required
+                  />
+                </div>
+                <div class="col-12">
+                  <label for="phone" class="form-label">Phone</label>
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="phone"
+                    name="phone"
+                    required
+                  />
+                </div>
+                <div class="col-12">
+                  <div class="mb-3">
+                    <label class="form-label d-block">Gender</label>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="male"
+                        value="male"
+                        required
+                      />
+                      <label class="form-check-label" for="male">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="female"
+                        value="female"
+                      />
+                      <label class="form-check-label" for="female"
+                        >Female</label
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="mb-3">
+                    <label for="profile_pic" class="form-label"
+                      >Profile Picture</label
+                    >
+                    <input
+                      class="form-control"
+                      type="file"
+                      id="profile_pic"
+                      name="profile_pic"
+                      accept="image/*"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-success me-3 mb-3">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const ApiUrl = "http://localhost:3000/api/student";
+      let currentPage = 1;
+      let currentSearch = "";
+
+      const CheckLogin =()=>{
+        const token = localStorage.getItem('token')
+        if(!token || token == 'undefined'){
+          window.location.href = "index.html"
+        }
+        return  token
+      }
+
+      const token = CheckLogin()
+
+      console.log(token)
+
+      // View all Student
+      async function fetchdata(search = "", page = 1) {
+        currentPage = page;
+        currentSearch = search;
+        const limit = 5;
+
+        const res = await fetch(
+          `${ApiUrl}/?search=${encodeURIComponent(search)}&page=${page}&limit=${limit}`,
+          {
+            headers:{'Authorization':`Bearer ${token}`}
+          }
+        );
+        const data = await res.json();
+          if(data.message == "Invalid Or expire token"){
+             window.location.href = "index.html"
+          }
+        const tbody = document.querySelector("#viewalldata");
+        tbody.innerHTML = "";
+          let ind = currentPage*limit -limit + 1
+        data.Studantdata.forEach((student) => {
+          tbody.innerHTML += `<tr>
+                    <td>${ind++}</td>
+                    <td>
+                        <img src="http://localhost:3000/uploads/${student.profile_pic}" alt="" width="50" height="50" class="rounded-circle">
+                    </td>
+                    <td>${student.first_name}</td>
+                    <td>${student.last_name}</td>
+                    <td>${student.email}</td>
+                    <td>${student.phone}</td>
+                    <td>${student.gender}</td>
+                    <td>
+                    <div class="d-flex gap-2">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ViewStudent" onclick="ViewStudent('${student._id}')"> View</button>
+                <button type="button" class="btn btn-warning text-white" onclick="EditStudent('${student._id}')">  <i class="bi bi-pencil-square"></i> Edit</button>
+                <button type="button" class="btn btn-danger" onclick="DeleteStudent('${student._id}')"> <i class="bi bi-trash"></i> Delete </button>
+                </div>
+                    </td>
+                </tr>`;
+        });
+        // pagination
+        renderPagination(data.totalPages);
+      }
+      fetchdata();
+    // paginaction
+      function renderPagination(totalPages) {
+        let container = document.querySelector("#paginaction");
+        container.innerHTML = "";
+        
+        // preve button
+        let preveli = document.createElement("li");
+        preveli.className = "page-item" + ( currentPage == 1 ? " disabled" : "");
+        preveli.innerHTML = `<a class="page-link" href="#">preve</a>`;
+        preveli.addEventListener("click", (e) => {
+            e.preventDefault();
+            fetchdata(currentSearch, currentPage - 1);
+          });
+          container.appendChild(preveli);
+
+          // index
+          let startPage = Math.max(currentPage - 2, 1);
+          let endPage = startPage + 4;
+
+          // Adjust if endPage exceeds totalPages
+          if (endPage > totalPages) {
+            endPage = totalPages;
+            startPage = Math.max(endPage - 4, 1);
+          }
+     
+        for (let i = startPage; i <= endPage; i++) {
+          const li = document.createElement("li");
+          li.className = "page-item" + (i == currentPage ? " active" : "");
+          li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+          li.addEventListener("click", (e) => {
+            e.preventDefault();
+            fetchdata(currentSearch, i);
+          });
+          container.appendChild(li);
+        }
+        
+        // next button
+        let nextli = document.createElement("li");
+        nextli.className = "page-item" + ( currentPage == totalPages ? " disabled" : "");
+        nextli.innerHTML = `<a class="page-link" href="#">next</a>`;
+        nextli.addEventListener("click", (e) => {
+            e.preventDefault();
+            fetchdata(currentSearch, currentPage + 1);
+          });
+          container.appendChild(nextli);
+      }
+
+      // View single Student
+      async function ViewStudent(id) {
+        const res = await fetch(
+          `${ApiUrl}/${id}`,
+          {
+            headers:{'Authorization':`Bearer ${token}`}
+          }
+        );
+        const data = await res.json();
+
+        document.querySelector("#ViewStudent #student-name").innerHTML =
+          data.first_name || "";
+        document.querySelector("#ViewStudent #first-name").innerHTML =
+          `first name : ${data.first_name}` || "";
+        document.querySelector("#ViewStudent #last-name").innerHTML =
+          `lasr name : ${data.last_name}` || "";
+        document.querySelector("#ViewStudent #email").innerHTML =
+          `email : ${data.email}` || "";
+        document.querySelector("#ViewStudent #gender").innerHTML =
+          `gender : ${data.gender}` || "";
+        document.querySelector("#ViewStudent #phone-number").innerHTML =
+          `phone number : ${data.phone}` || "";
+        document.querySelector("#ViewStudent #phone").href =
+          `tel:${data.phone}` || "";
+        document.querySelector("#ViewStudent #student-image").src =
+          `http://localhost:3000/uploads/${data.profile_pic}` || "";
+
+        const ShowStudentModel = new bootstrap.Modal(
+          document.getElementById("ViewStudent")
+        );
+        ShowStudentModel.show();
+      }
+
+      // add stutend model open
+      document.querySelector(".AddStudent").addEventListener("click", () => {
+        const editModal = new bootstrap.Modal(
+          document.getElementById("AddStudent")
+        );
+        editModal.show();
+      });
+
+      // add new stdent
+      document.querySelector("#AddStudentForm") .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const formData = new FormData(this);
+
+          const res = await fetch(ApiUrl, {
+            method: "POST",
+            body: formData,
+            headers:{'Authorization':`Bearer ${token}`}
+          });
+
+          if (res.ok) {
+            this.reset();
+
+            // Get the shown modal instance and hide it
+            const modalEl = document.getElementById("AddStudent");
+            const modalInstance = bootstrap.Modal.getInstance(modalEl);
+            if (modalInstance) modalInstance.hide();
+
+            fetchdata();
+          } else {
+            console.error("Failed to submit student form");
+          }
+        });
+
+      // EditStudent
+      async function EditStudent(id) {
+        try {
+          const res = await fetch(
+            `${ApiUrl}/${id}`,
+            {
+            headers:{'Authorization':`Bearer ${token}`}
+          }
+          );
+          const data = await res.json();
+
+          // Fill in form values
+          document.querySelector("#EditStudent #first_name").value =
+            data.first_name || "";
+          document.querySelector("#EditStudent #last_name").value =
+            data.last_name || "";
+          document.querySelector("#EditStudent #email").value =
+            data.email || "";
+          document.querySelector("#EditStudent #phone").value =
+            data.phone || "";
+          document.querySelector("#EditStudent #student-id").value =
+            data._id || "";
+
+          // Set gender radio button
+          if (data.gender === "Female") {
+            document.getElementById("female").checked = true;
+          } else if (data.gender === "male") {
+            document.getElementById("male").checked = true;
+          }
+
+          // Show the modal
+          const editModal = new bootstrap.Modal(
+            document.getElementById("EditStudent")
+          );
+          editModal.show();
+        } catch (err) {
+          console.error("Error fetching student:", err);
+        }
+      }
+
+      // update student record
+      document
+        .querySelector("#studentForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          const studentid = document.querySelector(
+            "#EditStudent #student-id"
+          ).value;
+
+          const formData = new FormData(this);
+
+          const res = await fetch(`${ApiUrl}/${studentid}`, {
+            method: "PUT",
+            body: formData,
+            headers:{'Authorization':`Bearer ${token}`}
+          });
+
+          if (res.ok) {
+            const modalEl = document.getElementById("EditStudent");
+            const modalInstance = bootstrap.Modal.getInstance(modalEl);
+            if (modalInstance) modalInstance.hide();
+            fetchdata();
+          } else {
+            alert("err audate data");
+          }
+        });
+
+      // DeleteStudent
+      async function DeleteStudent(id) {
+        if (confirm("are you sore to delete student")) {
+          await fetch(
+            `${ApiUrl}/${id}`,
+             {
+               method: "DELETE",
+              headers:{'Authorization':`Bearer ${token}`}
+               }
+          );
+          fetchdata();
+        }
+      }
+      //search student
+      document
+        .querySelector("#search-table-data")
+        .addEventListener("input", () => {
+            currentPage = 1;
+          fetchdata(document.querySelector("#search-table-data").value,currentPage);
+        });
+
+      //log out
+      let logout = ()=>{
+        localStorage.removeItem('token')
+        window.location.href = 'index.html'
+      }
+    </script>
+  </body>
+</html>

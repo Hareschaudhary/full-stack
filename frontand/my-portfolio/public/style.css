@@ -1,0 +1,152 @@
+        .active-nav {
+            color: blue !important;
+            transition: color 0.3s, font-weight 0.3s;
+            position: relative;
+        }
+        .active-nav::after {
+            content: "";
+            display: block;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -4px;
+            height: 3px;
+            background: blue;
+            border-radius: 2px;
+            transition: width 0.3s;
+        }
+        .nav-link {
+            transition: color 0.3s, font-weight 0.3s;
+            position: relative;
+        }
+        .nav-link:hover {
+            color: #2563eb; /* Tailwind blue-600 */
+            transition: color 0.3s, font-weight 0.3s;
+        }
+        .nav-link:hover::after {
+            content: "";
+            display: block;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -4px;
+            height: 3px;
+            background: #2563eb;
+            border-radius: 2px;
+            transition: width 0.3s;
+        }
+        .hero-bg{
+            background-image: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1500&q=80');
+             background-size: cover; 
+             background-position: center;
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0%;
+            height: 100%;
+            background-color: rgba(75, 85, 99, 1);
+            z-index: -1;   
+             transition: all 0.3s ease-in-out;  
+        }
+        header.scroll-header::after {
+            width: 100%;
+        }
+        header li{
+            position: relative;
+            padding: 10px;
+        }
+        header li::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            transform-origin: center center;
+            width: 0%;
+            height: 2px;
+            background-color: #2563eb; /* Tailwind blue-600 */
+            transition: all 0.3s ease-in-out;
+        }
+        header li:hover::after {
+            width: 100%;
+            transform: rotate(-180deg) translateX(-50%);
+            transform-origin: left top;
+        }
+        .btn{
+            background-color: transparent;
+            color: white;
+            border: 2px solid #2563eb;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: all 0.3s, color 0.3s, ;
+            font-weight: 600;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #2563eb; /* Tailwind blue-600 with opacity */
+            z-index: -1;
+            transition: all 0.3s ease-in-out;
+            transform: rotate(75deg) ;
+            transform-origin: left top;
+        }
+        .btn:hover {
+            color: white;
+        }
+        .btn:hover::after {
+              transform: rotate(0deg) ;
+                transform-origin: right top;
+        }
+        .card-shap{
+            position: relative;
+            overflow: hidden;
+            z-index: 1 ;
+            
+        }
+        .card-shap::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 50%;
+            height: 35%;
+         background-color: rgb(22, 27, 34);
+            transform: skewX(-20deg) translateX(-0%) translateY(100%);
+            z-index: 1;
+            transition: all 0.3s ease-in-out;
+            transform-origin: top right;
+            box-shadow:0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-shap::before{
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 50%;
+            height: 35%;
+            background-color: rgb(22, 27, 34);
+            transform: skewX(20deg) translateX(-100%) translateY(100%);
+            z-index: 1;
+            transition: all 0.3s ease-in-out;
+            z-index: -1;
+             transform-origin: top right;
+        }
+        .card-shap:hover::after {
+            transform: skewX(-20deg) translateX(-50%) translateY(0%);
+        }
+        .card-shap:hover::before {
+            transform: skewX(20deg) translateX(-50%) translateY(0%);
+        }
